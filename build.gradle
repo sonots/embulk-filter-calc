@@ -3,6 +3,7 @@ plugins {
     id "com.github.jruby-gradle.base" version "0.1.5"
     id "java"
     id "checkstyle"
+    id "antlr"
 }
 import com.github.jrubygradle.JRubyExec
 repositories {
@@ -23,6 +24,7 @@ dependencies {
     provided "org.embulk:embulk-core:0.8.12"
     // compile "YOUR_JAR_DEPENDENCY_GROUP:YOUR_JAR_DEPENDENCY_MODULE:YOUR_JAR_DEPENDENCY_VERSION"
     testCompile "junit:junit:4.+"
+    antlr "org.antlr:antlr4:4.5.3"
 }
 
 task classpath(type: Copy, dependsOn: ["jar"]) {
@@ -63,6 +65,10 @@ task gemPush(type: JRubyExec, dependsOn: ["gem"]) {
 task "package"(dependsOn: ["gemspec", "classpath"]) << {
     println "> Build succeeded."
     println "> You can run embulk with '-L ${file(".").absolutePath}' argument."
+}
+generateGrammarSource {
+//    maxHeapSize = "64m"
+    arguments += ["-visitor", "-long-messages", "-no-listener"]
 }
 
 task gemspec {
