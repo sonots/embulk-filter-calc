@@ -1,32 +1,33 @@
 package org.embulk.filter.calc;
 
-// import org.antlr.runtime.ANTLRInputStream;
-// import org.antlr.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
-
-import java.io.IOException;
+import org.embulk.spi.Schema;
 
 public class Calculator
 {
     private String name;
     private String formula;
+    private Schema inputSchema;
 
-    public Calculator(String name, String formula)
+    public Calculator(String name, String formula,Schema inputSchema)
     {
         this.formula = formula;
         this.name = name;
+        this.inputSchema = inputSchema;
     }
 
     public Boolean validateFormula(){
         ANTLRInputStream input = new ANTLRInputStream(this.formula);
-        CalcExprLexer lexer = new CalcExprLexer(input);
+        CalculatorLexer lexer = new CalculatorLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        CalcExprParser parser = new CalcExprParser(tokens);
-        ConfigErrorListener errorListener = new ConfigErrorListener();
+        CalculatorParser parser = new CalculatorParser(tokens);
+        ConfigErrorListener errorListener = new ConfigErrorListener(name);
         parser.removeErrorListeners();
         parser.addErrorListener(errorListener);
         ParseTree tree = parser.expr();
+        CalcConfigCheckVisitor eval = new CalcConfigCheckVisitor(inputSchema);
+        eval.visit(tree);
         return true;
     }
 }

@@ -52,7 +52,7 @@ public class CalcFilterPlugin
 
         Schema outputSchema = inputSchema;
         for( CalcConfig calcConfig: task.getCalcConfig() ){
-            Calculator calc = new Calculator(calcConfig.getName(),calcConfig.getFormula());
+            Calculator calc = new Calculator(calcConfig.getName(),calcConfig.getFormula(),inputSchema);
             calc.validateFormula();
         }
 

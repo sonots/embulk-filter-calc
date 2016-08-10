@@ -25,6 +25,6 @@ filters:
   - type: calc
     columns:
     - name: hoge
-      formula: "1 + 2 + 3"
+      formula: "1 + 2 + 3 + account"
 
 out: {type: stdout}
