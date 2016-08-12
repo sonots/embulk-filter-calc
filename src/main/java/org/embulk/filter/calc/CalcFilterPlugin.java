@@ -129,8 +129,6 @@ public class CalcFilterPlugin
             {
                 pageReader.setPage(page);
 
-                pageReader.setPage(page);
-
                 while (pageReader.nextRecord()) {
                     outputSchema.visitColumns(visitor);
                     pageBuilder.addRecord();
