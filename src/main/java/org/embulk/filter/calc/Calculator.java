@@ -2,33 +2,37 @@ package org.embulk.filter.calc;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.embulk.spi.PageReader;
 import org.embulk.spi.Schema;
 
 public class Calculator
 {
-    private String name;
     private String formula;
     private Schema inputSchema;
+    private PageReader pageReader;
+    private ParseTree tree;
+    private CalcFormulaVisitor visitor;
 
-    public Calculator(String name, String formula,Schema inputSchema)
+    public Calculator(String formula,Schema inputSchema,PageReader pageReader)
     {
         this.formula = formula;
-        this.name = name;
         this.inputSchema = inputSchema;
-    }
+        this.pageReader = pageReader;
 
-    public Boolean validateFormula(){
-        ANTLRInputStream input = new ANTLRInputStream(this.formula);
+
+        ANTLRInputStream input = new ANTLRInputStream(formula);
         CalculatorLexer lexer = new CalculatorLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CalculatorParser parser = new CalculatorParser(tokens);
-        ConfigErrorListener errorListener = new ConfigErrorListener(name);
-        parser.removeErrorListeners();
-        parser.addErrorListener(errorListener);
-        ParseTree tree = parser.expr();
-        CalcConfigCheckVisitor eval = new CalcConfigCheckVisitor(inputSchema);
-        eval.visit(tree);
-        return true;
+
+        this.tree = parser.expr();
+        this.visitor = new CalcFormulaVisitor(inputSchema,pageReader);
+
     }
+
+    public double calc(){
+        return visitor.visit(tree);
+    }
+
 }
 

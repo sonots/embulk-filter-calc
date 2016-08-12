@@ -4,7 +4,7 @@ package org.embulk.filter.calc;
 }
 
 expr: <assoc=right> expr '^' expr      # Power
-    | expr op=('*'|'/'|'%') expr       # SubDivMod
+    | expr op=('*'|'/'|'%') expr       # MulDivMod
     | expr op=('+'|'-') expr           # AddSub
     | NUM                              # Number
     | ID                               # Identifier

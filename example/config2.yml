@@ -17,20 +17,16 @@ in:
     allow_optional_columns: false
     columns:
     - {name: id, type: long}
-    - {name: account, type: double}
+    - {name: account, type: long}
     - {name: time, type: timestamp, format: '%Y-%m-%d %H:%M:%S'}
     - {name: purchase, type: timestamp, format: '%Y%m%d'}
     - {name: comment, type: string}
 filters:
   - type: calc
     columns:
-    - name: id
-      formula: "1 + id"
-    - name: account
-      formula: "0.5 + account"
-#    - name: hoge
-#      formula: "100 + id"
-#    output_columns:
-#    - { name: hoge, type: long }
+    - name: hoge
+      formula: "1 + 2 + 3 + account"
+    output_columns:
+      - { name: hoge, type: string }
 
 out: {type: stdout}
