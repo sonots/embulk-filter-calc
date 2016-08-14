@@ -22,7 +22,6 @@ targetCompatibility = 1.7
 dependencies {
     compile  "org.embulk:embulk-core:0.8.12"
     provided "org.embulk:embulk-core:0.8.12"
-    // compile "YOUR_JAR_DEPENDENCY_GROUP:YOUR_JAR_DEPENDENCY_MODULE:YOUR_JAR_DEPENDENCY_VERSION"
     testCompile "junit:junit:4.+"
     antlr "org.antlr:antlr4:4.5.3"
 }
@@ -80,11 +79,11 @@ Gem::Specification.new do |spec|
   spec.name          = "${project.name}"
   spec.version       = "${project.version}"
   spec.authors       = ["Hiroyuki Sato"]
-  spec.summary       = %[Calc filter plugin for Embulk]
+  spec.summary       = %[Caculator filter plugin for Embulk]
   spec.description   = %[Calc]
-  spec.email         = ["hsato@archsystem.com"]
+  spec.email         = ["hiroysato@gmail.com"]
   spec.licenses      = ["MIT"]
-  # TODO set this: spec.homepage      = "https://github.com/hsato/embulk-filter-calc"
+  spec.homepage      = "https://github.com/hiroyuki-sato/embulk-filter-calc"
 
   spec.files         = `git ls-files`.split("\n") + Dir["classpath/*.jar"]
   spec.test_files    = spec.files.grep(%r"^(test|spec)/")
