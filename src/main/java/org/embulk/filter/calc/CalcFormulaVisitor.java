@@ -23,11 +23,11 @@ public class CalcFormulaVisitor
 
     @Override
     public Double visitMulDivMod(CalculatorParser.MulDivModContext ctx){
-        double left  = visit(ctx.expr(0));
-        double right = visit(ctx.expr(1));
+        Double left  = visit(ctx.expr(0));
+        Double right = visit(ctx.expr(1));
 
-        if( left == Double.NaN || right == Double.NaN )
-            return Double.NaN;
+        if( left == null || right == null )
+            return null;
         else if ( ctx.op.getType() == CalculatorParser.MUL )
             return left * right;
 
@@ -39,10 +39,10 @@ public class CalcFormulaVisitor
 
     @Override
     public Double visitAddSub(CalculatorParser.AddSubContext ctx){
-        double left  = visit(ctx.expr(0));
-        double right = visit(ctx.expr(1));
-        if( left == Double.NaN || right == Double.NaN )
-            return Double.NaN;
+        Double left  = visit(ctx.expr(0));
+        Double right = visit(ctx.expr(1));
+        if( left == null || right == null )
+            return null;
         else if ( ctx.op.getType() == CalculatorParser.ADD )
             return left + right;
         else
@@ -60,18 +60,20 @@ public class CalcFormulaVisitor
     public Double visitIdentifier(CalculatorParser.IdentifierContext ctx)
     {
         String id = ctx.ID().getText();
-        double val;
+        Double val;
         Column column = inputSchema.lookupColumn(id);
 
         if( pageReader.isNull(column) ){
-            return Double.NaN;
+            val = null;
         } else if ( Types.DOUBLE.equals(column.getType()) ){
             val = pageReader.getDouble(column);
         } else if( Types.LONG.equals(column.getType()) ){
-            val = pageReader.getLong(column);
+            Long v;
+            v = pageReader.getLong(column);
+            val = v.doubleValue();
         } else {
             // throw
-            val = Double.NaN;
+            val = null;
         }
         return val;
     }

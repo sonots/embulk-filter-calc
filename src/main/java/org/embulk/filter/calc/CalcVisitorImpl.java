@@ -75,7 +75,7 @@ public class CalcVisitorImpl implements ColumnVisitor
         }
         else {
             Double val = calc.calc();
-            if( val == Double.NaN )
+            if( val == null )
                 pageBuilder.setNull(outputColumn);
             else
                 pageBuilder.setLong(outputColumn,val.longValue());
@@ -93,7 +93,7 @@ public class CalcVisitorImpl implements ColumnVisitor
         }
         else {
             Double val = calc.calc();
-            if( val == Double.NaN )
+            if( val == null )
                 pageBuilder.setNull(outputColumn);
             else
                 pageBuilder.setDouble(outputColumn,val);

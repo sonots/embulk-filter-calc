@@ -30,7 +30,7 @@ public class Calculator
 
     }
 
-    public double calc(){
+    public Double calc(){
         return visitor.visit(tree);
     }
 
