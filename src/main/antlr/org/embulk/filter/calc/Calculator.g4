@@ -48,7 +48,6 @@ ROUNDUP: 'roundup';
 ROUNDDOWN: 'roundown';
 
 NUM: '-'?[0-9]+('.' [0-9]+)?;
-//NUM: [0-9]+('.' [0-9]+)?;
 ID: [a-zA-Z][0-9A-Za-z_-]*;
 WS: [ \t\r\n]+ -> skip;
 
