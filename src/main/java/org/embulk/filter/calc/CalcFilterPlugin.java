@@ -19,6 +19,7 @@ import org.embulk.spi.type.Type;
 import org.embulk.spi.type.Types;
 
 import java.util.List;
+
 import static java.util.Locale.ENGLISH;
 
 public class CalcFilterPlugin

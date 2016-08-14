@@ -11,14 +11,15 @@ public class CalcConfigChecker
     private String formula;
     private Schema inputSchema;
 
-    public CalcConfigChecker(String name, String formula,Schema inputSchema)
+    public CalcConfigChecker(String name, String formula, Schema inputSchema)
     {
         this.formula = formula;
         this.name = name;
         this.inputSchema = inputSchema;
     }
 
-    public Boolean validateFormula(){
+    public Boolean validateFormula()
+    {
         ANTLRInputStream input = new ANTLRInputStream(this.formula);
         CalculatorLexer lexer = new CalculatorLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);

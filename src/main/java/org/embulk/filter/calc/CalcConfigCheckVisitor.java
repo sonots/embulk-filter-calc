@@ -4,6 +4,7 @@ import org.embulk.config.ConfigException;
 import org.embulk.spi.Column;
 import org.embulk.spi.Schema;
 import org.embulk.spi.type.Types;
+
 import static java.util.Locale.ENGLISH;
 
 public class CalcConfigCheckVisitor
