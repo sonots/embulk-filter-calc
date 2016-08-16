@@ -24,6 +24,10 @@ dependencies {
     provided "org.embulk:embulk-core:0.8.12"
     testCompile "junit:junit:4.+"
     antlr "org.antlr:antlr4:4.5.3"
+
+    testCompile "junit:junit:4.+"
+    testCompile "org.embulk:embulk-core:0.8.12:tests"
+    testCompile "org.embulk:embulk-standards:0.8.12"
 }
 
 task classpath(type: Copy, dependsOn: ["jar"]) {
