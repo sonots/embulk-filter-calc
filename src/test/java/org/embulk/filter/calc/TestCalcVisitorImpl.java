@@ -101,11 +101,11 @@ public class TestCalcVisitorImpl
                 .add("mul_long", LONG)
                 .add("div_long", LONG)
                 .add("mod_long", LONG)
-                .add("add_double", LONG)
-                .add("sub_double", LONG)
-                .add("mul_double", LONG)
-                .add("div_double", LONG)
-                .add("mod_double", LONG)
+                .add("add_double", DOUBLE)
+                .add("sub_double", DOUBLE)
+                .add("mul_double", DOUBLE)
+                .add("div_double", DOUBLE)
+                .add("mod_double", DOUBLE)
                 .build();
         List<Object[]> records = filter(task, inputSchema,
                 // row1
@@ -126,10 +126,10 @@ public class TestCalcVisitorImpl
             assertEquals(new Long(52100), record[2]);
             assertEquals(new Long(5),     record[3]);
             assertEquals(new Long(21),    record[4]);
-            assertEquals(new Double(623.5), record[5]);
-            assertEquals(new Double(423.5), record[6]);
-            assertEquals(new Double(52350), record[7]);
-            assertEquals(new Double(5.23), record[8]);
+            assertEquals(new Double(623.5),record[5]);
+            assertEquals(new Double(423.5),record[6]);
+            assertEquals(new Double(52350),record[7]);
+            assertEquals(new Double(5.235),record[8]);
             assertEquals(new Double(23.5), record[9]);
         }
     }
