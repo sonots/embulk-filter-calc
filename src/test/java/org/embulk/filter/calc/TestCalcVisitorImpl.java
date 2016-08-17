@@ -80,7 +80,7 @@ public class TestCalcVisitorImpl
     }
 
     @Test
-    public void visit_calc_AddFormula()
+    public void visit_calc_BasicFormula()
     {
         PluginTask task = taskFromYamlString(
                 "type: calc",
@@ -131,6 +131,60 @@ public class TestCalcVisitorImpl
             assertEquals(new Double(52350),record[7]);
             assertEquals(new Double(5.235),record[8]);
             assertEquals(new Double(23.5), record[9]);
+        }
+    }
+    @Test
+    public void visit_calc_PriorityChkFormula()
+    {
+        PluginTask task = taskFromYamlString(
+                "type: calc",
+                "columns:",
+                "  - {name: add_long,   formula: \" add_long + 100 * 3\"}",
+                "  - {name: sub_long,   formula: \" sub_long - 100 * 3\"}",
+                "  - {name: mul_long,   formula: \" mul_long * 100 * 3\"}",
+                "  - {name: div_long,   formula: \" div_long / 100 * 3\"}",
+                "  - {name: mod_long,   formula: \" mod_long % 100 * 3\"}",
+                "  - {name: add_double, formula: \" add_double + 100 * 3\"}",
+                "  - {name: sub_double, formula: \" sub_double - 100 * 3\"}",
+                "  - {name: mul_double, formula: \" mul_double * 100 * 3\"}",
+                "  - {name: div_double, formula: \" div_double / 100 * 3\"}",
+                "  - {name: mod_double, formula: \" mod_double % 100 * 3\"}");
+        Schema inputSchema = Schema.builder()
+                .add("add_long", LONG)
+                .add("sub_long", LONG)
+                .add("mul_long", LONG)
+                .add("div_long", LONG)
+                .add("mod_long", LONG)
+                .add("add_double", DOUBLE)
+                .add("sub_double", DOUBLE)
+                .add("mul_double", DOUBLE)
+                .add("div_double", DOUBLE)
+                .add("mod_double", DOUBLE)
+                .build();
+        List<Object[]> records = filter(task, inputSchema,
+                // row1
+                new Long(521),new Long(521),new Long(521),new Long(521),new Long(521),
+                new Double(523.5),new Double(523.5),new Double(523.5),new Double(523.5),new Double(523.5),
+                // row2
+                new Long(521),new Long(521),new Long(521),new Long(521),new Long(521),
+                new Double(523.5),new Double(523.5),new Double(523.5),new Double(523.5),new Double(523.5));
+
+        assertEquals(2, records.size());
+
+        Object[] record;
+        {
+            record = records.get(0);
+            assertEquals(10, record.length);
+            assertEquals(new Long(821),   record[0]);
+            assertEquals(new Long(221),   record[1]);
+            assertEquals(new Long(156300), record[2]);
+            assertEquals(new Long(15),     record[3]);
+            assertEquals(new Long(63),    record[4]);
+            assertEquals(new Double(823.5),record[5]);
+            assertEquals(new Double(223.5),record[6]);
+            assertEquals(new Double(157050),record[7]);
+//            assertEquals(new Double(15.705),record[8]); // TODO
+            assertEquals(new Double(70.5), record[9]);
         }
     }
 }
