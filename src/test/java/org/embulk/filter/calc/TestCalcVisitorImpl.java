@@ -115,6 +115,40 @@ public class TestCalcVisitorImpl
         }
     }
     @Test
+    public void visit_calc_SinglePowerFormula()
+    {
+        PluginTask task = taskFromYamlString(
+                "type: calc",
+                "columns:",
+                "  - {name: long1,   formula: \" 2 ^ 8\"}",
+                "  - {name: long2,   formula: \" long2 ^ 8 \"}",
+                "  - {name: double1,   formula: \" 2 ^ 8 \"}",
+                "  - {name: double2,   formula: \" double2 ^ 8 \"}");
+        Schema inputSchema = Schema.builder()
+                .add("long1", LONG)
+                .add("long2", LONG)
+                .add("double1", DOUBLE)
+                .add("double2", DOUBLE)
+                .build();
+        List<Object[]> records = filter(task, inputSchema,
+                // row1
+                new Long(10),new Long(3),new Double(10.0),new Double(2.0),
+                // row2
+                new Long(10),new Long(2),new Double(10.0),new Double(2.0));
+
+        assertEquals(2, records.size());
+
+        Object[] record;
+        {
+            record = records.get(0);
+            assertEquals(4, record.length);
+            assertEquals(new Long(256),   record[0]);
+            assertEquals(new Long(6561),   record[1]);
+            assertEquals(new Double(256), record[2]);
+            assertEquals(new Double(256.0),record[3]);
+        }
+    }
+    @Test
     public void visit_calc_BasicFormula()
     {
         PluginTask task = taskFromYamlString(

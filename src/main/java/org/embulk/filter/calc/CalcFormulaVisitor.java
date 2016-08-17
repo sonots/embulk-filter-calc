@@ -81,4 +81,14 @@ public class CalcFormulaVisitor
     public Double visitParen(CalculatorParser.ParenContext ctx){
         return visit(ctx.expr());
     }
+
+    @Override
+    public Double visitPower(CalculatorParser.PowerContext ctx){
+        Double left  = visit(ctx.expr(0));
+        Double right = visit(ctx.expr(1));
+        if( left == null || right == null )
+            return null;
+
+        return Math.pow(left,right);
+    }
 }
