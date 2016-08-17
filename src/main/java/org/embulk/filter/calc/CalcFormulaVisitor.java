@@ -77,4 +77,8 @@ public class CalcFormulaVisitor
         }
         return val;
     }
+    @Override
+    public Double visitParen(CalculatorParser.ParenContext ctx){
+        return visit(ctx.expr());
+    }
 }
