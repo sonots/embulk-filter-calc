@@ -79,6 +79,41 @@ public class TestCalcVisitorImpl
         return Pages.toObjects(outputSchema, output.pages);
     }
 
+
+    @Test
+    public void visit_calc_SingleFormula()
+    {
+        PluginTask task = taskFromYamlString(
+                "type: calc",
+                "columns:",
+                "  - {name: long1,   formula: \" 100 \"}",
+                "  - {name: long2,   formula: \" long2 \"}",
+                "  - {name: double1,   formula: \" 11.1 \"}",
+                "  - {name: double2,   formula: \" double2 \"}");
+        Schema inputSchema = Schema.builder()
+                .add("long1", LONG)
+                .add("long2", LONG)
+                .add("double1", DOUBLE)
+                .add("double2", DOUBLE)
+                .build();
+        List<Object[]> records = filter(task, inputSchema,
+                // row1
+                new Long(521),new Long(521),new Double(523.5),new Double(523.5),
+                // row2
+                new Long(521),new Long(521),new Double(523.5),new Double(523.5));
+
+        assertEquals(2, records.size());
+
+        Object[] record;
+        {
+            record = records.get(0);
+            assertEquals(4, record.length);
+            assertEquals(new Long(100),   record[0]);
+            assertEquals(new Long(521),   record[1]);
+            assertEquals(new Double(11.1), record[2]);
+            assertEquals(new Double(523.5),record[3]);
+        }
+    }
     @Test
     public void visit_calc_BasicFormula()
     {
