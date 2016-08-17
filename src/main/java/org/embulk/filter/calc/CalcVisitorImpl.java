@@ -47,7 +47,12 @@ public class CalcVisitorImpl
     public void booleanColumn(Column outputColumn)
     {
         Column inputColumn = inputSchema.lookupColumn(outputColumn.getName());
-        pageBuilder.setBoolean(outputColumn, pageReader.getBoolean(inputColumn));
+        if (pageReader.isNull(inputColumn)) {
+            pageBuilder.setNull(outputColumn);
+        }
+        else {
+            pageBuilder.setBoolean(outputColumn, pageReader.getBoolean(inputColumn));
+        }
     }
 
     @Override
@@ -56,7 +61,12 @@ public class CalcVisitorImpl
         Column inputColumn = inputSchema.lookupColumn(outputColumn.getName());
         Calculator calc = calcMap.get(outputColumn.getName());
         if (calc == null) {
-            pageBuilder.setLong(outputColumn, pageReader.getLong(inputColumn));
+            if (pageReader.isNull(inputColumn)) {
+                pageBuilder.setNull(outputColumn);
+            }
+            else {
+                pageBuilder.setLong(outputColumn, pageReader.getLong(inputColumn));
+            }
         }
         else {
             Double val = calc.calc();
@@ -75,7 +85,12 @@ public class CalcVisitorImpl
         Column inputColumn = inputSchema.lookupColumn(outputColumn.getName());
         Calculator calc = calcMap.get(outputColumn.getName());
         if (calc == null) {
-            pageBuilder.setDouble(outputColumn, pageReader.getDouble(inputColumn));
+            if (pageReader.isNull(inputColumn)) {
+                pageBuilder.setNull(outputColumn);
+            }
+            else {
+                pageBuilder.setDouble(outputColumn, pageReader.getDouble(inputColumn));
+            }
         }
         else {
             Double val = calc.calc();
@@ -92,21 +107,35 @@ public class CalcVisitorImpl
     public void stringColumn(Column outputColumn)
     {
         Column inputColumn = inputSchema.lookupColumn(outputColumn.getName());
-        pageBuilder.setString(outputColumn, pageReader.getString(inputColumn));
+        if (pageReader.isNull(inputColumn)) {
+            pageBuilder.setNull(outputColumn);
+        }
+        else {
+            pageBuilder.setString(outputColumn, pageReader.getString(inputColumn));
+        }
     }
 
     @Override
     public void jsonColumn(Column outputColumn)
     {
         Column inputColumn = inputSchema.lookupColumn(outputColumn.getName());
-        pageBuilder.setJson(outputColumn, pageReader.getJson(inputColumn));
-        ;
+        if (pageReader.isNull(inputColumn)) {
+            pageBuilder.setNull(outputColumn);
+        }
+        else {
+            pageBuilder.setJson(outputColumn, pageReader.getJson(inputColumn));
+        }
     }
 
     @Override
     public void timestampColumn(Column outputColumn)
     {
         Column inputColumn = inputSchema.lookupColumn(outputColumn.getName());
-        pageBuilder.setTimestamp(outputColumn, pageReader.getTimestamp(inputColumn));
+        if (pageReader.isNull(inputColumn)) {
+            pageBuilder.setNull(outputColumn);
+        }
+        else {
+            pageBuilder.setTimestamp(outputColumn, pageReader.getTimestamp(inputColumn));
+        }
     }
 }
