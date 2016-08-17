@@ -81,6 +81,35 @@ public class TestCalcVisitorImpl
 
 
     @Test
+    public void visit_calc_NullFormula()
+    {
+        PluginTask task = taskFromYamlString(
+                "type: calc",
+                "columns:",
+                "  - {name: long,   formula: \" long + 10 \"}",
+                "  - {name: double,   formula: \" double + 10 \"}");
+        Schema inputSchema = Schema.builder()
+                .add("long", LONG)
+                .add("double", DOUBLE)
+                .build();
+        List<Object[]> records = filter(task, inputSchema,
+                // row1
+                null,null,
+                // row2
+                null,null);
+
+        assertEquals(2, records.size());
+
+        Object[] record;
+        {
+            record = records.get(0);
+            assertEquals(2, record.length);
+            assertEquals(null,record[0]);
+            assertEquals(null,record[1]);
+        }
+    }
+
+    @Test
     public void visit_calc_SingleFormula()
     {
         PluginTask task = taskFromYamlString(
