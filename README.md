@@ -14,6 +14,16 @@ A filter plugin for Embulk to calculate with formula.
 
 ## Example
 
+Input data
+
+```
+id,account,time,purchase,comment
+1,32864,2015-01-27 19:23:49,20150127,embulk
+2,14824,2015-01-27 19:01:23,20150127,embulk jruby
+3,27559,2015-01-28 02:20:02,20150128,"Embulk ""csv"" parser plugin"
+4,11270,2015-01-29 11:54:36,20150129,NULL
+```
+
 ```yaml
 filters:
   - type: calc
@@ -21,7 +31,20 @@ filters:
     - name: id
       formula: "1 + id"
     - name: account
-      formula: "0.5 + account"
+      formula: "0.5 + account + id"
+```
+
+The execution result is the following.
+
+```
++---------+----------------+-------------------------+-------------------------+----------------------------+
+| id:long | account:double |          time:timestamp |      purchase:timestamp |             comment:string |
++---------+----------------+-------------------------+-------------------------+----------------------------+
+|       2 |        32865.5 | 2015-01-27 19:23:49 UTC | 2015-01-27 00:00:00 UTC |                     embulk |
+|       3 |        14826.5 | 2015-01-27 19:01:23 UTC | 2015-01-27 00:00:00 UTC |               embulk jruby |
+|       4 |        27562.5 | 2015-01-28 02:20:02 UTC | 2015-01-28 00:00:00 UTC | Embulk "csv" parser plugin |
+|       5 |        11274.5 | 2015-01-29 11:54:36 UTC | 2015-01-29 00:00:00 UTC |                            |
++---------+----------------+-------------------------+-------------------------+----------------------------+
 ```
 
 ## Supported formula
