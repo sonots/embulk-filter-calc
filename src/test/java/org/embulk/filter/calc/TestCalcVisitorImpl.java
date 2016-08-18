@@ -215,6 +215,40 @@ public class TestCalcVisitorImpl
             assertEquals(new Double(523.5),record[3]);
         }
     }
+
+
+    @Test
+    public void visit_calc_MathFormula()
+    {
+        PluginTask task = taskFromYamlString(
+                "type: calc",
+                "columns:",
+                "  - {name: sin_value,   formula: \" sin(sin_value) \"}",
+                "  - {name: cos_value,   formula: \" cos(cos_value) \"}",
+                "  - {name: tan_value,   formula: \" tan(tan_value) \"}");
+        Schema inputSchema = Schema.builder()
+                .add("sin_value", DOUBLE)
+                .add("cos_value", DOUBLE)
+                .add("tan_value", DOUBLE)
+                .build();
+        List<Object[]> records = filter(task, inputSchema,
+                // row1
+                new Double(0.05),new Double(0.05),new Double(0.05),
+                // row2
+                new Double(0.05),new Double(0.05),new Double(0.05));
+
+        assertEquals(2, records.size());
+
+        Object[] record;
+        {
+            record = records.get(0);
+            assertEquals(3, record.length);
+            assertEquals(Math.sin(0.05),record[0]);
+            assertEquals(Math.cos(0.05),record[1]);
+            assertEquals(Math.tan(0.05),record[2]);
+        }
+    }
+
     @Test
     public void visit_calc_SinglePowerFormula()
     {
