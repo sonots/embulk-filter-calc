@@ -91,4 +91,21 @@ public class CalcFormulaVisitor
 
         return Math.pow(left,right);
     }
+
+    // Scientific Functions
+    @Override
+    public Double visitFuncCos(CalculatorParser.FuncCosContext ctx){
+        return Math.cos(visit(ctx.expr()));
+    }
+
+    @Override
+    public Double visitFuncSin(CalculatorParser.FuncSinContext ctx){
+        return Math.sin(visit(ctx.expr()));
+    }
+
+    @Override
+    public Double visitFuncTan(CalculatorParser.FuncTanContext ctx){
+        return Math.tan(visit(ctx.expr()));
+    }
+
 }

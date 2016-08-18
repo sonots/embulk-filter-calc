@@ -8,24 +8,21 @@ expr: <assoc=right> expr '^' expr      # Power
     | expr op=('+'|'-') expr           # AddSub
     | NUM                              # Number
     | ID                               # Identifier
-    | func '(' expr ')'                # MathFunc
+    | func                             # MathFunc
     | '(' expr ')'                     # Paren
-    | multifunc '(' expr COMMA NUM ')' # Multifunca
     ;
 
-func: COS
-    | TAN
-    | SIN
-    | ACOS
-    | ATAN
-    | ASIN
-    | LOG
-    | LN
+func: COS '(' expr ')' # FuncCos
+    | TAN '(' expr ')' # FuncTan
+    | SIN '(' expr ')' # FuncSin
+//    | ACOS
+//    | ATAN
+//    | ASIN
+//    | LOG
+//    | LN
+//    | ROUDUP
+//    | ROUDDOWN
     ;
-
-multifunc: ROUNDUP
-         | ROUNDDOWN
-         ;
 
 ADD: '+';
 SUB: '-';
@@ -36,11 +33,11 @@ MOD: '%';
 COS: 'cos';
 SIN: 'sin';
 TAN: 'tan';
-ACOS: 'acos';
-ASIN: 'asin';
-ATAN: 'atan';
-LN: 'ln';
-LOG: 'log';
+// ACOS: 'acos';
+// ASIN: 'asin';
+// ATAN: 'atan';
+// LN: 'ln';
+// LOG: 'log';
 
 COMMA: ',';
 
