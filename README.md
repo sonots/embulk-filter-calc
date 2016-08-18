@@ -1,6 +1,6 @@
 # Calc filter plugin for Embulk
 
-TODO: Write short description here and build.gradle file.
+A filter plugin for Embulk to calculate with formula.
 
 ## Overview
 
@@ -8,19 +8,34 @@ TODO: Write short description here and build.gradle file.
 
 ## Configuration
 
-- **option1**: description (integer, required)
-- **option2**: description (string, default: `"myvalue"`)
-- **option3**: description (string, default: `null`)
+- **columns**: columns to calculate
+-   **name**: name of column to output calculation result.
+-   **formula**: calculation formula.
 
 ## Example
 
 ```yaml
 filters:
   - type: calc
-    option1: example1
-    option2: example2
+    columns:
+    - name: id
+      formula: "1 + id"
+    - name: account
+      formula: "0.5 + account"
 ```
 
+## Supported formula
+
+* Basic Operators
+  * Add: +
+  * Sub: -
+  * Mod: *
+  * Div: /
+  * Mod: %
+  * Power: ^
+  * Paren: ()
+* Math functions
+  * sin/cos/tan
 
 ## Build
 
