@@ -20,6 +20,8 @@ public class CalcConfigChecker
 
     public Boolean validateFormula()
     {
+        inputSchema.lookupColumn(name); // throw Exception
+
         ANTLRInputStream input = new ANTLRInputStream(this.formula);
         CalculatorLexer lexer = new CalculatorLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
