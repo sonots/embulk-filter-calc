@@ -35,7 +35,7 @@ public class TestCalcVisitorImpl
     public EmbulkTestRuntime runtime = new EmbulkTestRuntime();
 
     @Before
-    public void createReasource()
+    public void createResource()
     {
     }
 

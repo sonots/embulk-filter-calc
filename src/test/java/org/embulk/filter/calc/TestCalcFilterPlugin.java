@@ -69,7 +69,7 @@ public class TestCalcFilterPlugin
 
 
     @Before
-    public void createReasource()
+    public void createResource()
     {
         plugin = new CalcFilterPlugin();
     }
