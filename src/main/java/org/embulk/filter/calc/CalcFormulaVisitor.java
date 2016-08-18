@@ -22,35 +22,45 @@ public class CalcFormulaVisitor
     }
 
     @Override
-    public Double visitMulDivMod(CalculatorParser.MulDivModContext ctx){
-        Double left  = visit(ctx.expr(0));
+    public Double visitMulDivMod(CalculatorParser.MulDivModContext ctx)
+    {
+        Double left = visit(ctx.expr(0));
         Double right = visit(ctx.expr(1));
 
-        if( left == null || right == null )
+        if (left == null || right == null) {
             return null;
-        else if ( ctx.op.getType() == CalculatorParser.MUL )
+        }
+        else if (ctx.op.getType() == CalculatorParser.MUL) {
             return left * right;
+        }
 
-        else if( ctx.op.getType() == CalculatorParser.DIV )
+        else if (ctx.op.getType() == CalculatorParser.DIV) {
             return left / right;
-        else
+        }
+        else {
             return left % right;
+        }
     }
 
     @Override
-    public Double visitAddSub(CalculatorParser.AddSubContext ctx){
-        Double left  = visit(ctx.expr(0));
+    public Double visitAddSub(CalculatorParser.AddSubContext ctx)
+    {
+        Double left = visit(ctx.expr(0));
         Double right = visit(ctx.expr(1));
-        if( left == null || right == null )
+        if (left == null || right == null) {
             return null;
-        else if ( ctx.op.getType() == CalculatorParser.ADD )
+        }
+        else if (ctx.op.getType() == CalculatorParser.ADD) {
             return left + right;
-        else
+        }
+        else {
             return left - right;
+        }
     }
 
     @Override
-    public Double visitNumber(CalculatorParser.NumberContext ctx){
+    public Double visitNumber(CalculatorParser.NumberContext ctx)
+    {
         String id = ctx.NUM().getText();
 
         return Double.parseDouble(id);
@@ -63,49 +73,58 @@ public class CalcFormulaVisitor
         Double val;
         Column column = inputSchema.lookupColumn(id);
 
-        if( pageReader.isNull(column) ){
+        if (pageReader.isNull(column)) {
             val = null;
-        } else if ( Types.DOUBLE.equals(column.getType()) ){
+        }
+        else if (Types.DOUBLE.equals(column.getType())) {
             val = pageReader.getDouble(column);
-        } else if( Types.LONG.equals(column.getType()) ){
+        }
+        else if (Types.LONG.equals(column.getType())) {
             Long v;
             v = pageReader.getLong(column);
             val = v.doubleValue();
-        } else {
+        }
+        else {
             // throw
             val = null;
         }
         return val;
     }
+
     @Override
-    public Double visitParen(CalculatorParser.ParenContext ctx){
+    public Double visitParen(CalculatorParser.ParenContext ctx)
+    {
         return visit(ctx.expr());
     }
 
     @Override
-    public Double visitPower(CalculatorParser.PowerContext ctx){
-        Double left  = visit(ctx.expr(0));
+    public Double visitPower(CalculatorParser.PowerContext ctx)
+    {
+        Double left = visit(ctx.expr(0));
         Double right = visit(ctx.expr(1));
-        if( left == null || right == null )
+        if (left == null || right == null) {
             return null;
+        }
 
-        return Math.pow(left,right);
+        return Math.pow(left, right);
     }
 
     // Scientific Functions
     @Override
-    public Double visitFuncCos(CalculatorParser.FuncCosContext ctx){
+    public Double visitFuncCos(CalculatorParser.FuncCosContext ctx)
+    {
         return Math.cos(visit(ctx.expr()));
     }
 
     @Override
-    public Double visitFuncSin(CalculatorParser.FuncSinContext ctx){
+    public Double visitFuncSin(CalculatorParser.FuncSinContext ctx)
+    {
         return Math.sin(visit(ctx.expr()));
     }
 
     @Override
-    public Double visitFuncTan(CalculatorParser.FuncTanContext ctx){
+    public Double visitFuncTan(CalculatorParser.FuncTanContext ctx)
+    {
         return Math.tan(visit(ctx.expr()));
     }
-
 }
