@@ -79,6 +79,78 @@ public class TestCalcVisitorImpl
         return Pages.toObjects(outputSchema, output.pages);
     }
 
+    @Test
+    public void visit_calc_NoFormula()
+    {
+        PluginTask task = taskFromYamlString(
+                "type: calc",
+                "columns: []");
+        Schema inputSchema = Schema.builder()
+                .add("timestamp",TIMESTAMP)
+                .add("string",STRING)
+                .add("boolean", BOOLEAN)
+                .add("long", LONG)
+                .add("double",DOUBLE)
+                .add("json",JSON)
+                .build();
+        List<Object[]> records = filter(task, inputSchema,
+                // row1
+                Timestamp.ofEpochSecond(1436745600), "string", new Boolean(true), new Long(0), new Double(0.5), ValueFactory.newString("json"),
+                // row2
+                Timestamp.ofEpochSecond(1436745600), "string", new Boolean(true), new Long(0), new Double(0.5), ValueFactory.newString("json"));
+
+        assertEquals(2, records.size());
+
+        Object[] record;
+        {
+            record = records.get(0);
+            assertEquals(6, record.length);
+            assertEquals(Timestamp.ofEpochSecond(1436745600),record[0]);
+            assertEquals("string",record[1]);
+            assertEquals(new Boolean(true),record[2]);
+            assertEquals(new Long(0),record[3]);
+            assertEquals(new Double(0.5),record[4]);
+            assertEquals(ValueFactory.newString("json"),record[5]);
+        }
+    }
+
+    @Test
+    public void visit_calc_NoFormulaWithNull()
+    {
+        PluginTask task = taskFromYamlString(
+                "type: calc",
+                "columns: []");
+        Schema inputSchema = Schema.builder()
+                .add("dummy",STRING)
+                .add("timestamp",TIMESTAMP)
+                .add("string",STRING)
+                .add("boolean", BOOLEAN)
+                .add("long", LONG)
+                .add("double",DOUBLE)
+                .add("json",JSON)
+                .build();
+        List<Object[]> records = filter(task, inputSchema,
+                // row1
+                "dummy",null,null,null,null,null,null,
+                // row2
+                "dummy",null,null,null,null,null,null);
+
+        assertEquals(2, records.size());
+
+        Object[] record;
+        {
+            record = records.get(0);
+            assertEquals(7, record.length);
+            assertEquals("dummy",record[0]);
+            assertEquals(null,record[1]);
+            assertEquals(null,record[2]);
+            assertEquals(null,record[3]);
+            assertEquals(null,record[4]);
+            assertEquals(null,record[5]);
+            assertEquals(null,record[6]);
+
+        }
+    }
 
     @Test
     public void visit_calc_NullFormula()
