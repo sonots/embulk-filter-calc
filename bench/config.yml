@@ -1,0 +1,22 @@
+in:
+  type: file
+  path_prefix: ./sample00
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: csv
+    delimiter: ','
+    quote: '"'
+    escape: ''
+    null_string: 'NULL'
+    header_line: false
+    columns:
+    - {name: id, type: long}
+    - {name: score, type: long}
+filters:
+  - type: calc
+    columns:
+    - name: id
+      formula: "1 + id"
+out:
+  type: "null"

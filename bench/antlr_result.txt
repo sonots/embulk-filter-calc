@@ -1,0 +1,13 @@
+2016-08-25 02:26:08.523 +0900: Embulk v0.8.11
+2016-08-25 02:26:12.085 +0900 [INFO] (0001:transaction): Loaded plugin embulk/filter/calc from a load path
+2016-08-25 02:26:12.154 +0900 [INFO] (0001:transaction): Listing local files at directory '.' filtering filename by prefix 'sample00'
+2016-08-25 02:26:12.171 +0900 [INFO] (0001:transaction): Loading files [sample000.00..csv, sample001.00..csv, sample002.00..csv, sample003.00..csv]
+2016-08-25 02:26:12.226 +0900 [WARN] (0001:transaction): Setting '' (empty string) to "escape" option is obsoleted. Currently it becomes null automatically but this behavior will be removed. Please set "escape: null" explicitly.
+2016-08-25 02:26:12.382 +0900 [INFO] (0001:transaction): Using local thread executor with max_threads=8 / tasks=4
+2016-08-25 02:26:12.388 +0900 [INFO] (0001:transaction): {done:  0 / 4, running: 0}
+2016-08-25 02:26:18.772 +0900 [INFO] (0001:transaction): {done:  3 / 4, running: 1}
+2016-08-25 02:26:18.773 +0900 [INFO] (0001:transaction): {done:  3 / 4, running: 1}
+2016-08-25 02:26:18.902 +0900 [INFO] (0001:transaction): {done:  4 / 4, running: 0}
+2016-08-25 02:26:18.903 +0900 [INFO] (0001:transaction): {done:  4 / 4, running: 0}
+2016-08-25 02:26:18.909 +0900 [INFO] (main): Committed.
+2016-08-25 02:26:18.910 +0900 [INFO] (main): Next config diff: {"in":{"last_path":"sample003.00..csv"},"out":{}}
