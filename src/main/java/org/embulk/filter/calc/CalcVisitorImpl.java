@@ -59,23 +59,11 @@ public class CalcVisitorImpl
     public void longColumn(Column outputColumn)
     {
         Column inputColumn = inputSchema.lookupColumn(outputColumn.getName());
-        Calculator calc = calcMap.get(outputColumn.getName());
-        if (calc == null) {
-            if (pageReader.isNull(inputColumn)) {
-                pageBuilder.setNull(outputColumn);
-            }
-            else {
-                pageBuilder.setLong(outputColumn, pageReader.getLong(inputColumn));
-            }
+        if (pageReader.isNull(inputColumn)) {
+            pageBuilder.setNull(outputColumn);
         }
         else {
-            Double val = calc.calc();
-            if (val == null) {
-                pageBuilder.setNull(outputColumn);
-            }
-            else {
-                pageBuilder.setLong(outputColumn, val.longValue());
-            }
+            pageBuilder.setLong(outputColumn, pageReader.getLong(inputColumn) + 1);
         }
     }
 

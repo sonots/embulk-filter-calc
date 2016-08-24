@@ -1,3 +1,5 @@
+6.6 sec from Using local thread executor ...
+
 2016-08-25 02:26:08.523 +0900: Embulk v0.8.11
 2016-08-25 02:26:12.085 +0900 [INFO] (0001:transaction): Loaded plugin embulk/filter/calc from a load path
 2016-08-25 02:26:12.154 +0900 [INFO] (0001:transaction): Listing local files at directory '.' filtering filename by prefix 'sample00'
